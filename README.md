@@ -1,96 +1,89 @@
-Customer Purchase Prediction using Logistic Regression
-📌 Overview
+# Customer Purchase Prediction
 
-This project simulates a real-world marketing analytics use case to predict whether an individual is a potential customer based on demographic and financial attributes.
+This project focuses on building a machine learning model to predict whether an individual is likely to become a customer based on demographic and financial information. The work is framed as a marketing analytics use case where predictive modeling supports customer targeting and acquisition decisions.
 
-The objective is to support data-driven customer targeting using an interpretable machine learning model.
+---
 
-🧠 Business Problem
+## Problem Statement
 
-Marketing teams need to identify high-potential customers efficiently in order to:
+Marketing teams often need to prioritize prospects with the highest likelihood of conversion in order to use resources efficiently. This project addresses that need by formulating the problem as a binary classification task.
 
-Optimize acquisition costs
+---
 
-Improve conversion rates
+## Dataset
 
-Reduce ineffective marketing efforts
+The dataset contains structured customer information, including:
 
-This problem is formulated as a binary classification task.
+- Age  
+- Marital or social status (encoded)  
+- Gender (binary encoded)  
+- Car ownership  
+- Income level  
 
-📊 Dataset
+The target variable represents the purchase decision (0 = not a customer, 1 = customer).
 
-The dataset contains customer demographic and financial information:
+---
 
-Feature	Description
-Usia	Age of the individual
-Status	Marital or social status (encoded)
-Kelamin	Gender (binary encoded)
-Memiliki_Mobil	Car ownership (0/1)
-Penghasilan	Income level
+## Approach
 
-Target Variable
+The workflow follows a standard machine learning pipeline:
 
-Purchase decision (0 = No, 1 = Yes)
+1. Data loading and validation  
+2. Basic exploratory checks and missing value analysis  
+3. Feature and target separation  
+4. Train–test split  
+5. Logistic Regression modeling  
+6. Evaluation using classification results  
 
-🛠️ Tools & Technologies
+Logistic Regression was chosen due to its interpretability and suitability for business-facing analysis.
 
-Python
+---
 
-Pandas
+## Model Evaluation
 
-NumPy
+Model performance is evaluated on a hold-out test set using classification outputs.  
+The results are interpreted not only from a predictive standpoint but also in terms of their implications for marketing decision-making.
 
-Scikit-learn
+---
 
-🔍 Methodology
+## Key Findings
 
-Data loading and validation
+- Income level and asset ownership are strong indicators of purchase likelihood  
+- An interpretable model helps explain why certain customers are more likely to convert  
+- The model provides a reliable baseline for customer targeting strategies  
 
-Missing value analysis
+---
 
-Feature and target separation
+## Business Value
 
-Train-test split
+This project demonstrates how predictive modeling can be used to:
 
-Logistic Regression modeling
+- Identify high-potential customers  
+- Reduce ineffective marketing outreach  
+- Support data-driven acquisition strategies  
 
-Model evaluation using classification metrics
+---
 
-📈 Model Evaluation
+## Future Work
 
-The model performance was evaluated using classification analysis on the test dataset.
+Possible improvements include:
 
-Logistic Regression was selected due to its interpretability, making it suitable for business-facing predictive analytics.
+- ROC-AUC analysis and threshold tuning  
+- Feature scaling  
+- Comparison with tree-based models  
+- Hyperparameter optimization  
 
-🔑 Key Insights
+---
 
-Income and asset ownership show strong influence on purchase probability
+## Tools
 
-Interpretable model coefficients help explain customer behavior
+- Python  
+- Pandas  
+- NumPy  
+- Scikit-learn  
 
-The model serves as a strong baseline for customer targeting strategies
+---
 
-🚀 Business Impact
-
-This model enables organizations to:
-
-Identify high-potential customers
-
-Optimize marketing resource allocation
-
-Support strategic decision-making using data
-
-📌 Future Improvements
-
-ROC-AUC and threshold optimization
-
-Feature scaling and normalization
-
-Model comparison with tree-based algorithms
-
-Hyperparameter tuning
-
-👤 Author
+## Author
 
 Akmal
-Aspiring Data Scientist
