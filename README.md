@@ -1,74 +1,84 @@
-# Customer Purchase Prediction
+# Customer Car Purchase Prediction
 
-This project builds a machine learning model to predict customer purchase likelihood using demographic and financial data. The work is framed as a real-world marketing analytics case where predictive modeling supports business decision-making.
+An educational marketing analytics case study using Logistic Regression.
 
----
+**Author:** Rifqiy Akmal | **Tools:** Python, pandas, scikit-learn, Matplotlib
 
-## Problem Context
+## Business question
 
-In customer acquisition, marketing teams must focus on prospects with the highest probability of conversion. This project formulates the problem as a binary classification task to support efficient and data-driven targeting strategies.
+Can the supplied demographic and financial attributes distinguish car buyers from non-buyers? The potential use case is prioritizing prospects for review. This project does not demonstrate marketing savings or predict a documented future purchase window.
 
----
+## Results
 
-## Data Overview
+Stratified 80/20 split with `random_state=0`, after excluding two implausible age records. The holdout contains 200 records. Classification metrics use a 0.5 threshold; ROC-AUC uses probabilities.
 
-The dataset consists of structured customer attributes:
-- Age
-- Marital or social status (encoded)
-- Gender (binary encoded)
-- Car ownership
-- Income level
+| Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
+|---|---:|---:|---:|---:|---:|
+| Majority baseline | 0.6350 | 0.6350 | 1.0000 | 0.7768 | 0.5000 |
+| Logistic Regression | 0.9400 | 0.9675 | 0.9370 | 0.9520 | 0.9660 |
 
-The target variable indicates whether an individual becomes a customer.
+Five-fold training cross-validation ROC-AUC: **0.9809 ± 0.0091** (mean ± standard deviation). See [holdout metrics](reports/test_metrics.csv) and [cross-validation metrics](reports/cv_metrics.csv).
 
----
+![Holdout evaluation](assets/evaluation.png)
 
-## Methodology
+Precision describes the reliability of flagged buyers; recall describes how many recorded buyers are found. The model outperforms the majority baseline on this holdout. These results replace the old scores because the split and preprocessing changed.
 
-The modeling workflow includes:
-- Data validation and preprocessing
-- Feature and target separation
-- Train–test split
-- Logistic Regression modeling
-- Performance evaluation on unseen data
+## Data dictionary
 
-Logistic Regression is selected for its interpretability, allowing insights to be communicated clearly to non-technical stakeholders.
+The supplied `calonpembeli_ch5.csv` has 1,000 rows; 998 remain after cleaning (633 buyers and 365 non-buyers). The original publisher, collection date, license, and whether the data are synthetic are unverified. The CSV is retained from the original repository; confirm provenance before external reuse.
 
----
+| Field | Treatment | Meaning / limitation |
+|---|---|---|
+| ID | Excluded | Row identifier |
+| Usia | Scaled numeric | Age, presumed years |
+| Status | One-hot encoded | Codes 0–3; meanings unknown |
+| Kelamin | One-hot encoded | Gender codes 0/1; mapping unknown |
+| Memiliki_Mobil | Scaled numeric | Values 0–4; provisionally a count, definition unverified |
+| Penghasilan | Scaled numeric | Income; currency and time unit unknown |
+| Beli_Mobil | Binary target | 1: purchase; 0: no purchase; timing unknown |
 
-## Evaluation and Insights
+## Analysis workflow
 
-Model evaluation is performed using classification results on the test set.  
-Analysis shows that income-related features and asset ownership contribute strongly to purchase probability.
+1. Check missing values, IDs, target values, and age plausibility.
+2. Apply the documented adult-age assumption (18–100), excluding two records.
+3. Split before exploration; perform EDA on training data only.
+4. Fit scaling and categorical encoding inside a Logistic Regression pipeline.
+5. Compare a majority baseline and five-fold cross-validation, then evaluate the holdout.
+6. Interpret results, limitations, and possible business use.
 
-Beyond prediction accuracy, the model is designed to explain *why* certain customers are more likely to convert.
+![Training-data exploration](assets/eda.png)
 
----
+See the [executed notebook](notebooks/customer_purchase_prediction.ipynb) for explanations, outputs, and coefficient interpretation.
 
-## Business Impact
+## Run locally
 
-The model demonstrates how data science can:
-- Improve customer targeting efficiency
-- Reduce wasted marketing spend
-- Support strategic acquisition decisions
+Python 3.12 was used for this revision.
 
----
+```bash
+git clone https://github.com/akmalrfy/customer-purchase-prediction.git
+cd customer-purchase-prediction
+python -m venv .venv
+```
 
-## Future Enhancements
+Activate with `source .venv/bin/activate` (macOS/Linux) or `.venv\Scripts\activate` (Windows), then:
 
-- ROC-AUC and threshold optimization
-- Feature scaling
-- Model comparison with tree-based algorithms
-- Hyperparameter tuning
+```bash
+python -m pip install -r requirements.txt
+python -m jupyterlab
+```
 
----
+Open `notebooks/customer_purchase_prediction.ipynb` and run all cells. Paths work from the repository root or `notebooks/`. Charts and metrics refresh in `assets/` and `reports/`.
 
-## Tools
+## Repository contents
 
-Python, Pandas, NumPy, Scikit-learn
+- `data/`: supplied CSV
+- `notebooks/`: documented analysis and saved outputs
+- `assets/`: charts
+- `reports/`: evaluation tables
+- `requirements.txt`: dependencies
 
----
+## Limitations and next steps
 
-## Author
+A random holdout does not establish performance on future customers. Features must be known before purchase: ownership could leak the target if recorded afterward, and this cannot be resolved without source documentation. Coefficients describe associations, not causal effects; scaled numeric coefficients and categorical reference effects need separate interpretation. Age and gender require fairness assessment before operational use.
 
-Akmal
+Next steps: verify provenance and category definitions, evaluate on future records, assess calibration and subgroup performance, and choose a threshold using validation data and actual outreach costs. No measured marketing ROI or cost reduction is claimed.
