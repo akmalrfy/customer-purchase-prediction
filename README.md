@@ -19,7 +19,7 @@ Stratified 80/20 split with `random_state=0`, after excluding two implausible ag
 
 Five-fold training cross-validation ROC-AUC: **0.9809 ± 0.0091** (mean ± standard deviation). See [holdout metrics](reports/test_metrics.csv) and [cross-validation metrics](reports/cv_metrics.csv).
 
-![Holdout evaluation](assets/evaluation.png)
+![Holdout evaluation](customer-purchase-prediction/assets/evaluation.png)
 
 Precision describes the reliability of flagged buyers; recall describes how many recorded buyers are found. The model outperforms the majority baseline on this holdout. These results replace the old scores because the split and preprocessing changed.
 
@@ -46,7 +46,7 @@ The supplied `calonpembeli_ch5.csv` has 1,000 rows; 998 remain after cleaning (6
 5. Compare a majority baseline and five-fold cross-validation, then evaluate the holdout.
 6. Interpret results, limitations, and possible business use.
 
-![Training-data exploration](assets/eda.png)
+![Training-data exploration](customer-purchase-prediction/assets/eda.png)
 
 See the [executed notebook](notebooks/customer_purchase_prediction.ipynb) for explanations, outputs, and coefficient interpretation.
 
